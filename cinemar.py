@@ -1,6 +1,7 @@
+import tkinter as tk
 from tkinter import *
-#from gui.login import WinLogin
-
+from gui.login import WinLogin
+import tkinter.messagebox as tkMsgBox
 
 class WinCinemar:
     def __init__(self, ventana):
@@ -21,7 +22,6 @@ class WinCinemar:
     def abrir_login(self):
         WinLogin(self.ventana)
 
-
-ventana = Tk()
+ventana = tk.Tk()
 app = WinCinemar(ventana)
 ventana.mainloop()

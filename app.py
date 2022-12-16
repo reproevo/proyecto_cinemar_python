@@ -1,16 +1,16 @@
 import sqlite3
 import hashlib
+from datetime import *
 
-conn = sqlite3.connect("DB_Cinemar.db")
-cur = conn.cursor()
-sql = """SELECT * FROM usuarios"""
-cur.execute(sql)
-res = cur.fetchall()
-for i in res:
-  print(i)
-conn.close()
-
-print("------------------")  #BORRAR ESTO AL TERMINAR
+def listar_usuarios():
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM usuarios"""
+  cur.execute(sql)
+  res = cur.fetchall()
+  for i in res:
+    print(i)
+  conn.close()
 
 def registro(usuario,password,email,nombre,apellido):
   estado=0
@@ -27,20 +27,34 @@ def registro(usuario,password,email,nombre,apellido):
   cur.execute(sql,(usuario,passEncryp,email,nombre,apellido,estado))
   conn.commit()
   conn.close()
-  return
+
+def disponibilidad(usuario):
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM usuarios WHERE usuario = ?"""
+  cur.execute(sql,(usuario,))
+  res = cur.fetchall()
+  print(res)
+  conn.close()
+  if res == []:
+    print("Nombre de Usuario Disponible")
+    return True
+  else:
+    print("Nombre de Usuario OCUPADO")
+    res = [] #vacio la variable que guardo la consulta con los datos obtenidos de la BD
+    return False
 
 def inicio_sesion(usuario,password):
   passEncryp = encriptar_contraseña(password)
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()
-  sql = f"""SELECT * FROM usuarios WHERE usuario = ? AND password = ?"""
+  sql = """SELECT * FROM usuarios WHERE usuario = ? AND password = ?"""
   cur.execute(sql,(usuario,passEncryp))
   res = cur.fetchall()
-  print(res)
   conn.close()
   if res != []:
     print("Conexion Exitosa")
-    return True
+    return True,res
   else:
     print("Error de conexion")
     return False
@@ -61,20 +75,42 @@ def crear_reserva(id_usuario,num_sala,pelicula,hora,fecha,butaca):
   conn.commit()
   conn.close()
 
-def mis_reserva():
-  pass
-
+def mis_reserva(id_usuario):
+  hoy = datetime.today()
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM reservas WHERE id_usuario = ? AND fecha > ?"""
+  cur.execute(sql,(id_usuario,hoy))
+  conn.close()
+  res = cur.fetchall()
+  
 def ver_reservas():
-  pass
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM reservas"""
+  cur.execute(sql,)
+  conn.close()
 
-def historial():
-  pass
+def historial(id_usuario):
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM reservas WHERE id_usuario = ?"""
+  cur.execute(sql,(id_usuario))
+  conn.close()
 
-def ver_reservas():
-  pass
+def consultar_reservas():
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM reservas WHERE fecha > ?"""
+  cur.execute(sql,)
+  conn.close()
 
-def consulta_reserva():
-  pass
+def consultar_usuario(id_usuario):
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM usuarios WHERE id_usuario = ?"""
+  cur.execute(sql,(id_usuario))
+  conn.close()
 
 def crear_sala(num_sala,pelicula,tipo_sala,hora,fecha,cant_butacas):
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -89,7 +125,6 @@ def crear_sala(num_sala,pelicula,tipo_sala,hora,fecha,cant_butacas):
   cur.execute(sql,(num_sala,pelicula,tipo_sala,hora,fecha,cant_butacas))
   conn.commit()
   conn.close()
-  return
 
 def modificar_sala(id_sala,num_sala,pelicula,tipo_sala,hora,fecha,cant_butacas):
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -112,7 +147,6 @@ def eliminar_sala(id_sala):
   cur.execute(sql)
   conn.commit()
   conn.close()
-  return
 
 def modificar_descuentos(dia,descuento):
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -121,7 +155,6 @@ def modificar_descuentos(dia,descuento):
   cur.execute(sql,(descuento,dia))
   conn.commit()
   conn.close()
-  return
 
 def ver_salas():
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -133,21 +166,6 @@ def ver_salas():
     print(i)
   conn.commit()
   conn.close()
-  return
-
-def encriptar_contraseña(password):
-  return hashlib.sha256(password.encode("utf-8")).hexdigest()
-#-----------------------------------------------
-#Ejecuciones Prueba
-#
-#registro("reproevo","1426","edu.onlyrock93@gmail.com","Patricio","Escobar")
-#ver_salas()
-#crear_sala(6,"Transformer","2D","14:30","14/06/2023",60)
-#eliminar_sala(1)
-#modificar_descuentos("Martes", 45 )
-#crear_reserva(1,1,"Avatar","15:20","22-12-2022",7)
-#modificar_sala(1,6,"Avatar","3D","15:30","22-12-2022",50)
-#------------------------------------------------
 
 def ver_descuentos():
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -159,5 +177,6 @@ def ver_descuentos():
     print(i)
   conn.commit()
   conn.close()
-  return
 
+def encriptar_contraseña(password):
+  return hashlib.sha256(password.encode("utf-8")).hexdigest()
