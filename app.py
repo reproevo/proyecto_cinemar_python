@@ -8,9 +8,8 @@ def listar_usuarios():
   sql = """SELECT * FROM usuarios"""
   cur.execute(sql)
   res = cur.fetchall()
-  for i in res:
-    print(i)
   conn.close()
+  return res
 
 def registro(usuario,password,email,nombre,apellido):
   estado=0
@@ -28,13 +27,41 @@ def registro(usuario,password,email,nombre,apellido):
   conn.commit()
   conn.close()
 
+def registroAdm(usuario,password,email,nombre,apellido,estado):
+  passEncryp = encriptar_contraseña(password)
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """INSERT INTO usuarios (usuario,
+                              password,
+                              email,
+                              nombre,
+                              apellido,
+                              estado)
+                        VALUES(?,?,?,?,?,?)"""
+  cur.execute(sql,(usuario,passEncryp,email,nombre,apellido,estado))
+  conn.commit()
+  conn.close()
+
+def editarUsuarioAdm(id,usuario,password,email,nombre,apellido,estado):
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """UPDATE usuarios SET  usuario = ?, 
+                             password = ?,
+                             email = ?,
+                             nombre = ?,
+                             apellido = ?,
+                             estado = ? 
+                         WHERE  id = ?"""
+  cur.execute(sql,(usuario,password,email,nombre,apellido,estado,id))
+  conn.commit()
+  conn.close()
+
 def disponibilidad(usuario):
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()
   sql = """SELECT * FROM usuarios WHERE usuario = ?"""
   cur.execute(sql,(usuario,))
   res = cur.fetchall()
-  print(res)
   conn.close()
   if res == []:
     print("Nombre de Usuario Disponible")
@@ -53,13 +80,9 @@ def inicio_sesion(usuario,password):
   res = cur.fetchall()
   conn.close()
   if res != []:
-    print("Conexion Exitosa")
     return True,res
   else:
-    print("Error de conexion")
     return False
-  
-  return
 
 def crear_reserva(id_usuario,num_sala,pelicula,hora,fecha,butaca):
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -89,7 +112,9 @@ def ver_reservas():
   cur = conn.cursor()
   sql = """SELECT * FROM reservas"""
   cur.execute(sql,)
+  res = cur.fetchall()
   conn.close()
+  return res
 
 def historial(id_usuario):
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -98,19 +123,14 @@ def historial(id_usuario):
   cur.execute(sql,(id_usuario))
   conn.close()
 
-def consultar_reservas():
-  conn = sqlite3.connect("DB_Cinemar.db")
-  cur = conn.cursor()
-  sql = """SELECT * FROM reservas WHERE fecha > ?"""
-  cur.execute(sql,)
-  conn.close()
-
 def consultar_usuario(id_usuario):
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()
-  sql = """SELECT * FROM usuarios WHERE id_usuario = ?"""
-  cur.execute(sql,(id_usuario))
+  sql = """SELECT * FROM usuarios WHERE id = ?"""
+  cur.execute(sql,(id_usuario,))
+  res = cur.fetchall()
   conn.close()
+  return res
 
 def crear_sala(num_sala,pelicula,tipo_sala,hora,fecha,cant_butacas):
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -148,13 +168,14 @@ def eliminar_sala(id_sala):
   conn.commit()
   conn.close()
 
-def modificar_descuentos(dia,descuento):
+def modificar_descuentos(id,descuento):
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()
-  sql = f"""UPDATE descuentos SET porcent_descuento = ? WHERE  dia = ?"""
-  cur.execute(sql,(descuento,dia))
+  sql = f"""UPDATE descuentos SET porcent_descuento = ? WHERE  id_descuentos = ?"""
+  cur.execute(sql,(descuento,id))
   conn.commit()
   conn.close()
+
 
 def ver_salas():
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -162,10 +183,19 @@ def ver_salas():
   sql = """SELECT * FROM salas"""
   cur.execute(sql)
   res = cur.fetchall()
-  for i in res:
-    print(i)
   conn.commit()
   conn.close()
+  return(res)
+
+def consultar_sala(id):
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM salas WHERE id_sala = ?"""
+  cur.execute(sql,(id,))
+  res = cur.fetchall()
+  conn.commit()
+  conn.close()
+  return(res)
 
 def ver_descuentos():
   conn = sqlite3.connect("DB_Cinemar.db")
@@ -173,10 +203,33 @@ def ver_descuentos():
   sql = """SELECT * FROM descuentos"""
   cur.execute(sql)
   res = cur.fetchall()
-  for i in res:
-    print(i)
   conn.commit()
   conn.close()
+  return res
+
+def consultar_descuentos(id):
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM descuentos WHERE id_descuentos = ?"""
+  cur.execute(sql,(id,))
+  res = cur.fetchall()
+  conn.commit()
+  conn.close()
+  return res
 
 def encriptar_contraseña(password):
   return hashlib.sha256(password.encode("utf-8")).hexdigest()
+#-----------------------------------------------
+#Ejecuciones Prueba
+#
+#registro("edu","1234","edu@gmail.com","Patricio","Escobar")
+#listar_usuarios()
+#ver_salas()
+#crear_sala(6,"Transformer","2D","14:30","14/06/2023",60)
+#eliminar_sala(1)
+#modificar_descuentos("Martes", 45 )
+#crear_reserva(1,1,"Avatar","15:20","22-12-2022",7)
+#modificar_sala(1,6,"Avatar","3D","15:30","22-12-2022",50)
+#print(inicio_sesion("edu","1234")[1][0][6])
+#disponibilidad("edu")
+#------------------------------------------------

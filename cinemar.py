@@ -24,4 +24,4 @@ class WinCinemar:
 
 ventana = tk.Tk()
 app = WinCinemar(ventana)
-ventana.mainloop()
+ventana.mainloop()  
