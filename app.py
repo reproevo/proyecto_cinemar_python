@@ -119,8 +119,8 @@ def eliminar_reserva(usuario,id):
 
 def mis_reservas(usuario):
   hoy = datetime.today()
-  fecha = hoy.strftime("%d-%m-%Y")
-  hora = hoy.strftime("%H:%M")
+  fecha = hoy.strftime('%d-%m-%Y')
+  #hora = hoy.strftime("%H:%M")
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()
   sql = """SELECT * FROM reservas WHERE usuario = ? AND fecha > ?"""
