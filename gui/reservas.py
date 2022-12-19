@@ -12,16 +12,17 @@ class WinReservas(Toplevel):
         self.resizable(width=False, height=True)
         
         #Menu
-        label1= Label(self,text="Menu de Administracion de Usuarios",font="20")
+        label1= Label(self,text="Lista de Reservas",font="20")
         label1.pack()
-        label2= Label(self,text="Estados: 0-Usuario   1-Administrador   2-Supervisor   3-Bloqueado   4-Vip")
-        label2.pack()
+        #label2= Label(self,text="Estados: 0-Usuario   1-Administrador   2-Supervisor   3-Bloqueado   4-Vip")
+        #label2.pack()
 
-        tv = ttk.Treeview(self, columns=("id_usuario", "num_sala","pelicula","hora","fecha","butaca"), name="tvReservas")
+        tv = ttk.Treeview(self, columns=("id_usuario", "num_sala","pelicula","formato","hora","fecha","butaca"), name="tvReservas")
         tv.column("#0", width=50)
         tv.column("id_usuario", width=100, anchor=CENTER)
         tv.column("num_sala", width=100, anchor=CENTER)
         tv.column("pelicula", width=250, anchor=CENTER)
+        tv.column("formato", width=50, anchor=CENTER)
         tv.column("hora", width=100, anchor=CENTER)
         tv.column("fecha", width=100, anchor=CENTER)
         tv.column("butaca", width=50, anchor=CENTER)
@@ -30,9 +31,10 @@ class WinReservas(Toplevel):
         tv.heading("id_usuario", text="Usuario", anchor=CENTER)
         tv.heading("num_sala", text="N° de Sala", anchor=CENTER)
         tv.heading("pelicula", text="Pelicula", anchor=CENTER)
+        tv.heading("formato", text="Formato", anchor=CENTER)
         tv.heading("hora", text="Hora", anchor=CENTER)
         tv.heading("fecha", text="Fecha", anchor=CENTER)
-        tv.heading("butaca", text="Butaca", anchor=CENTER)
+        tv.heading("butaca", text="IdSala", anchor=CENTER)
         
         tv.bind("<<TreeviewSelect>>", self.obtener_fila)
         tv.pack(padx=5,pady=5,side=LEFT,fill=Y)
@@ -65,4 +67,4 @@ class WinReservas(Toplevel):
             tvReservas.delete(record)
         reservas = ver_reservas()
         for i in reservas:
-            tvReservas.insert("", END, text=i[0], values=(i[1], i[2], i[3], i[4], i[5], i[6]))
+            tvReservas.insert("", END, text=i[0], values=(i[1], i[2], i[3], i[4], i[5], i[6], i[7]))

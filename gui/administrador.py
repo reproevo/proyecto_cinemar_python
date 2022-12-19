@@ -23,6 +23,7 @@ class WinAdmin(tk.Toplevel):
         button3.grid(row = 2, column = 0,sticky="ew", padx=10,pady=2,ipadx=3, ipady=3)
         button4 = Button(self, text = "RESERVAS",command= self.abrir_winReservas)
         button4.grid(row = 2, column = 0,sticky="ew", padx=10,pady=2,ipadx=3, ipady=3)
+        
         label1 = Label(self,width=40,height=2)
         label1.grid(row= 3,column = 0)
         button5 = Button(self, text = "SALIR",command = self.destroy)
