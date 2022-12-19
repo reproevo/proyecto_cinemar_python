@@ -259,6 +259,8 @@ class WinMisReservas(tk.Toplevel):
         for record in tvMisReservas.get_children():
             tvMisReservas.delete(record)
         datosreservas = mis_reservas(self.usuario)
+        print(self.usuario)
+        print(datosreservas)
         for i in datosreservas:
             tvMisReservas.insert("", END, text=i[0], values=(i[1],i[2], i[3], i[4], i[5], i[6],i[7]))
 #-----------------------------------------------------------------

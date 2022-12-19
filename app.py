@@ -123,8 +123,8 @@ def mis_reservas(usuario):
   hora = hoy.strftime("%H:%M")
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()
-  sql = """SELECT * FROM reservas WHERE usuario = ? AND fecha > ? AND hora > ?"""
-  cur.execute(sql,(usuario,fecha,hora))
+  sql = """SELECT * FROM reservas WHERE usuario = ? AND fecha > ?"""
+  cur.execute(sql,(usuario,fecha))
   res = cur.fetchall()
   conn.close()
   return res 
