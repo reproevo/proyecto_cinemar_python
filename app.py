@@ -150,6 +150,16 @@ def ver_reservas():
   conn.close()
   return res
 
+def ver_reservasParticular(id):
+  usuario = consultar_usuario(id)[0][1]
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT * FROM reservas WHERE usuario = ? """
+  cur.execute(sql,(usuario,))
+  res = cur.fetchall()
+  conn.close()
+  return res
+
 def historial(id_usuario):
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()

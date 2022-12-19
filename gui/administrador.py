@@ -4,7 +4,7 @@ import tkinter.ttk as ttk
 from gui.salas import WinSalas
 from gui.descuentos import WinDescuentos
 from gui.users import WinUsuarios
-from gui.reservas import WinReservas
+from gui.reservas import WinReservas,PreguntaID
 
 class WinAdmin(tk.Toplevel):
     def __init__(self, master=None):
@@ -23,11 +23,12 @@ class WinAdmin(tk.Toplevel):
         button3.grid(row = 2, column = 0,sticky="ew", padx=10,pady=2,ipadx=3, ipady=3)
         button4 = Button(self, text = "RESERVAS",command= self.abrir_winReservas)
         button4.grid(row = 3, column = 0,sticky="ew", padx=10,pady=2,ipadx=3, ipady=3)
-        
+        button4 = Button(self, text = "RESERVA PARTICULAR",command= self.abrir_PreguntaID)
+        button4.grid(row = 4, column = 0,sticky="ew", padx=10,pady=2,ipadx=3, ipady=3)
         label1 = Label(self,width=40,height=2)
-        label1.grid(row= 4,column = 0)
+        label1.grid(row= 5,column = 0)
         button5 = Button(self, text = "SALIR",command = self.destroy)
-        button5.grid(row = 5, column = 0, sticky="ew", padx=10, pady=2 , ipadx=3, ipady=3)
+        button5.grid(row = 6, column = 0, sticky="ew", padx=10, pady=2 , ipadx=3, ipady=3)
 
     def abrir_winSalas(self):
         WinSalas(self.master)
@@ -40,3 +41,6 @@ class WinAdmin(tk.Toplevel):
     
     def abrir_winReservas(self):
         WinReservas(self.master)
+
+    def abrir_PreguntaID(self):
+        PreguntaID(self.master)
