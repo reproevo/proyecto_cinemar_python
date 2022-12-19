@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter.ttk as ttk
 import tkinter as tk
 import tkinter.messagebox as tkMsgBox
-from app import ver_reservas,ver_salas,consultar_sala,consultarDescuentoVip,calcularPrecio,consultar_usuario,crear_reserva,precios
+from app import ver_salas,consultar_sala,consultarDescuentoVip,calcularPrecio,consultar_usuario,crear_reserva,precios
 from app import disponibilidadSala,mis_reservas,eliminar_reserva,mi_historial
 
 class WinReservas(Toplevel):
@@ -11,7 +11,7 @@ class WinReservas(Toplevel):
         self.master = master
         self.id_usuario = id
         self.title("Menu Usuario")
-        #self.geometry("900x350")
+
         self.resizable(width=False, height=True)
         
         #Menu
@@ -67,13 +67,12 @@ class WinCrearReserva(tk.Toplevel):
         super().__init__(master)
         self.master = master
         self.id_usuario = id
-        #self.usuario = consultar_usuario(id)[0][1]
         self.id_sala = sala
         self.title("Solicitar Reserva")   
         #Tamaño de ventana
         self.resizable(width=False, height=False)
         self.config(padx=10,pady=10)
-        #self.geometry("220x300")
+
         #Cuerpo de la ventana
         labelPreg = Label(self,text="Reserva" ,font=20)
         labelPreg.grid(row = 0 ,column = 0,sticky="ew",padx=2, pady=2, ipadx=2, ipady=2)
@@ -267,13 +266,12 @@ class WinCancelarReserva(tk.Toplevel):
         super().__init__(master)
         self.master = master
         self.id_usuario = id
-        #self.usuario = consultar_usuario(id)[0][1]
         self.id_sala = sala
         self.title("Cancelar Reserva")   
         #Tamaño de ventana
         self.resizable(width=False, height=False)
         self.config(padx=10,pady=10)
-        #self.geometry("220x300")
+
         #Cuerpo de la ventana
         labelPreg = Label(self,text="¿Desea Cancelar la Reserva?" ,font=10)
         labelPreg.grid(row = 0 ,column = 0,sticky="ew",padx=2, pady=2, ipadx=2, ipady=2)
@@ -292,9 +290,6 @@ class WinCancelarReserva(tk.Toplevel):
          
         entry1.insert(0, self.id_sala)
         entry1.config(state="readonly")
-
-        # print(consultar_usuario(self.id_usuario)[0][1])
-        # print(self.id_sala)
 
     def cancelar_reserva(self):
         try:

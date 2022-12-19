@@ -1,12 +1,8 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import *
-from app import crear_sala
-from app import consultar_sala
-from app import modificar_sala
-from app import eliminar_sala
+from app import crear_sala,consultar_sala,modificar_sala,eliminar_sala
 import tkinter.messagebox as tkMsgBox
-#from gui.salas import WinSalas
 
 class WinCrearSalas(tk.Toplevel):
     def __init__(self, master=None):
@@ -195,11 +191,8 @@ class WinEliminarSalas(tk.Toplevel):
         #Tamaño de ventana
         self.resizable(width=False, height=False)
         self.config(padx=10,pady=10)
-        #self.geometry("220x300")
-
+        #Cuerpo de la ventana
         datosSala = consultar_sala(self.id_sala)
-        # print(self.id_sala)
-        # print(datosSala)
         for i in datosSala:
             textlabel0=f"N° de ID : {i[0]}"            
             textlabel1=f"N° de Sala : {i[1]}"
@@ -209,7 +202,6 @@ class WinEliminarSalas(tk.Toplevel):
             textlabel5=f"Fecha : {i[5]}"
             textlabel6=f"N° de Butacas : {i[6]}"
 
-        #Cuerpo de la ventana
         labelPreg = Label(self,text="¿Desea Eliminar la Sala?" ,font=20)
         labelPreg.grid(row = 0 ,column = 0,sticky="ew",padx=2, pady=2, ipadx=2, ipady=2)
 

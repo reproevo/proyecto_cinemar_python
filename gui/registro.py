@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import *
-from app import registro
-from app import disponibilidad
+from app import registro,disponibilidad
 import tkinter.messagebox as tkMsgBox
 
 class WinRegistro(tk.Toplevel):

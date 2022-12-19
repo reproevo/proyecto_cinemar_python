@@ -12,11 +12,9 @@ class WinReservas(Toplevel):
         self.title("Reservas")
         self.resizable(width=False, height=True)
         
-        #Menu
+        #Cuerpo de Ventana
         label1= Label(self,text=f"Lista de Reservas ",font="20")
         label1.pack()
-        #label2= Label(self,text="Estados: 0-Usuario   1-Administrador   2-Supervisor   3-Bloqueado   4-Vip")
-        #label2.pack()
 
         tv = ttk.Treeview(self, columns=("id_usuario", "num_sala","pelicula","formato","hora","fecha","butaca"), name="tvReservas")
         tv.column("#0", width=50)
@@ -42,12 +40,7 @@ class WinReservas(Toplevel):
 
         frame1= Frame(self)
         frame1.pack(side=RIGHT)
-        # button1=Button(frame1,text="AGREGAR")
-        # button1.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
-        # button2=Button(frame1,text="EDITAR")
-        # button2.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
-        # button3=Button(frame1,text="ELIMINAR")
-        # button3.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
+
         button4=Button(frame1,text="ACTUALIZAR",command=self.refrescar)
         button4.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
         
@@ -101,8 +94,6 @@ class WinReservasParticular(Toplevel):
         #Menu
         label1= Label(self,text="Reservas Particulares",font="20")
         label1.pack()
-        #label2= Label(self,text="Estados: 0-Usuario   1-Administrador   2-Supervisor   3-Bloqueado   4-Vip")
-        #label2.pack()
 
         tv = ttk.Treeview(self, columns=("id_usuario", "num_sala","pelicula","formato","hora","fecha","butaca"), name="tvReservas")
         tv.column("#0", width=50)
@@ -128,12 +119,7 @@ class WinReservasParticular(Toplevel):
 
         frame1= Frame(self)
         frame1.pack(side=RIGHT)
-        # button1=Button(frame1,text="AGREGAR")
-        # button1.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
-        # button2=Button(frame1,text="EDITAR")
-        # button2.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
-        # button3=Button(frame1,text="ELIMINAR")
-        # button3.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
+
         button4=Button(frame1,text="ACTUALIZAR",command=self.refrescar)
         button4.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
         

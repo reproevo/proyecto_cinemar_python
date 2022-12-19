@@ -8,10 +8,9 @@ class WinSalas(Toplevel):
         super().__init__(master)        
         self.master = master
         self.title("Menu Salas")
-        #self.geometry("900x350")
+        #Tamaño de ventana
         self.resizable(width=False, height=False)
-        
-        #Menu
+        #Cuerpo de la ventana
         label1= Label(self,text="Menu de Salas",font="20")
         label1.pack()
         

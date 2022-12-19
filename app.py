@@ -321,23 +321,3 @@ def consultar_reservasSala(id):
   res = cur.fetchall()
   conn.close()
   return res
-
-
-#-----------------------------------------------
-#Ejecuciones Prueba
-#
-#registro("edu","1234","edu@gmail.com","Patricio","Escobar")
-#listar_usuarios()
-#ver_salas()
-#crear_sala(6,"Transformer","2D","14:30","14/06/2023",60)
-#eliminar_sala(1)
-#modificar_descuentos("Martes", 45 )
-#crear_reserva("1234",1,"Avatar","3D","15:20","22-12-2022",7)
-#modificar_sala(1,6,"Avatar","3D","15:30","22-12-2022",50)
-#print(inicio_sesion("edu","1234")[1][0][6])
-#disponibilidad("edu")
-#print(consultarDescuentoVip(6))
-# print(precios("2D")[0][2])
-# print(calcularPrecio("2D",50))
-#disponibilidadSala(4)
-#------------------------------------------------

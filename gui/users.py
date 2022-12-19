@@ -1,12 +1,7 @@
 from tkinter import *
 import tkinter.ttk as ttk
 import tkinter as tk
-from app import listar_usuarios
-from app import registroAdm
-from app import disponibilidad
-from app import consultar_usuario
-from app import encriptar_contraseña
-from app import editarUsuarioAdm,eliminarUsuario
+from app import listar_usuarios,registroAdm,disponibilidad,consultar_usuario,encriptar_contraseña,editarUsuarioAdm,eliminarUsuario
 import tkinter.messagebox as tkMsgBox
 
 class WinUsuarios(Toplevel):

@@ -66,14 +66,13 @@ class WinEditarDescuento(tk.Toplevel):
         #Tamaño de ventana
         self.resizable(width=False, height=False)
         self.config(padx=10,pady=10)
-        #self.geometry("220x300")
+        #Cuerpo de la ventana
         datosDescuentos = consultar_descuentos(self.id_descuento)
         datosDia = consultar_diadescuentos(self.id_descuento)
         for i in datosDescuentos:
             textlabel1=f"{i[0]}"
         for i in datosDia:
             textlabel2=f"{i[0]}"
-        #Cuerpo de la ventana
 
         label1 = Label(self, text = "Dia : ")
         label1.grid(row = 0 ,column = 0,sticky="ew",padx=2, pady=2, ipadx=2, ipady=2)
