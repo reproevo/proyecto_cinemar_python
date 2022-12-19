@@ -308,7 +308,7 @@ def calcularPrecio(formato,descuento):
 def disponibilidadSala(id):
   sala = consultar_sala(id)
   cantidad = consultar_reservasSala(sala[0][0])
-  if len(cantidad) <= sala[0][6]:
+  if len(cantidad) < sala[0][6]:
     return True
   else:
     return False
@@ -339,5 +339,5 @@ def consultar_reservasSala(id):
 #print(consultarDescuentoVip(6))
 # print(precios("2D")[0][2])
 # print(calcularPrecio("2D",50))
-#disponibilidadSala(3)
+#disponibilidadSala(4)
 #------------------------------------------------
