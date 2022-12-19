@@ -47,6 +47,7 @@ class WinLogin(tk.Toplevel):
                     idConsulta = inicio_sesion(usuario,password)[1][0][0]
                     if consulta == 0:
                         WinUsuario(self.master,idConsulta)
+                        print("Ventana de Usuario")
                     elif consulta == 1:
                         print("Ventana de Admin")
                         WinAdmin(self.master)
@@ -57,6 +58,7 @@ class WinLogin(tk.Toplevel):
                         tkMsgBox.showerror(self.master.title(), "Usuario Bloqueado")
                     elif consulta == 4:
                         WinUsuario(self.master,idConsulta)
+                        print("Ventana de Usuario Vip")
                     else:
                         tkMsgBox.showerror(self.master.title(), "Se produjo un error al obtener los datos del usuario, reintente nuevamente")
                 else:

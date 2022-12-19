@@ -56,6 +56,15 @@ def editarUsuarioAdm(id,usuario,password,email,nombre,apellido,estado):
   conn.commit()
   conn.close()
 
+def eliminarUsuario(id):
+  estado=3
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """UPDATE usuarios SET  estado = ? WHERE  id = ?"""
+  cur.execute(sql,(estado,id))
+  conn.commit()
+  conn.close()
+
 def disponibilidad(usuario):
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()
@@ -64,10 +73,10 @@ def disponibilidad(usuario):
   res = cur.fetchall()
   conn.close()
   if res == []:
-    print("Nombre de Usuario Disponible")
+    #print("Nombre de Usuario Disponible")
     return True
   else:
-    print("Nombre de Usuario OCUPADO")
+    #print("Nombre de Usuario OCUPADO")
     res = [] #vacio la variable que guardo la consulta con los datos obtenidos de la BD
     return False
 
@@ -236,6 +245,16 @@ def consultar_descuentos(id):
   conn = sqlite3.connect("DB_Cinemar.db")
   cur = conn.cursor()
   sql = """SELECT porcent_descuento FROM descuentos WHERE id_descuentos = ?"""
+  cur.execute(sql,(id,))
+  res = cur.fetchall()
+  conn.commit()
+  conn.close()
+  return res
+
+def consultar_diadescuentos(id):
+  conn = sqlite3.connect("DB_Cinemar.db")
+  cur = conn.cursor()
+  sql = """SELECT dia FROM descuentos WHERE id_descuentos = ?"""
   cur.execute(sql,(id,))
   res = cur.fetchall()
   conn.commit()

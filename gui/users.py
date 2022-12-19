@@ -6,7 +6,7 @@ from app import registroAdm
 from app import disponibilidad
 from app import consultar_usuario
 from app import encriptar_contraseña
-from app import editarUsuarioAdm
+from app import editarUsuarioAdm,eliminarUsuario
 import tkinter.messagebox as tkMsgBox
 
 class WinUsuarios(Toplevel):
@@ -48,7 +48,7 @@ class WinUsuarios(Toplevel):
         button1.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
         button2=Button(frame1,text="EDITAR",command=self.abrir_editarUsuarioAdm)
         button2.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
-        button3=Button(frame1,text="ELIMINAR")
+        button3=Button(frame1,text="ELIMINAR",command=self.abrir_eliminarUsuarioAdm)
         button3.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
         button4=Button(frame1,text="ACTUALIZAR",command=self.refrescar)
         button4.pack(padx=5,pady=5,ipadx=5,ipady=5,fill=X)
@@ -60,6 +60,9 @@ class WinUsuarios(Toplevel):
 
     def abrir_editarUsuarioAdm(self):
         WinEditarUsuarioAdm(self.master,self.select_id)
+    
+    def abrir_eliminarUsuarioAdm(self):
+        WinEiminarUsuarioAdm(self.master,self.select_id)
 
     def obtener_fila(self, event):
         tvUsuarios = self.nametowidget("tvUsuarios")
@@ -311,6 +314,52 @@ class WinEditarUsuarioAdm(tk.Toplevel):
                     tkMsgBox.showwarning(self.master.title(), "Se produjo un error al intentar registrarse")
                 else:
                     tkMsgBox.showinfo(self.master.title(), "Registro Modificado!!!!!!")
+                    self.destroy()
+            else:
+                tkMsgBox.showwarning(self.master.title(), "Existen campos sin completar")
+        except Exception as ex:
+            tkMsgBox.showerror(self.master.title(), str(ex))
+
+class WinEiminarUsuarioAdm(tk.Toplevel):
+    def __init__(self, master=None,id=None):
+        super().__init__(master)
+        self.master = master
+        self.id_usuario = id
+        self.title("Eliminar Usuario")   
+        #Tamaño de ventana
+        self.resizable(width=False, height=False)
+        self.config(padx=10,pady=10)
+
+        #Cuerpo de la ventana
+        label1 = Label(self, text = "Desea Eliminar al USUARIO")
+        label1.grid(row = 0 ,column = 0,sticky="w",padx=2, pady=2, ipadx=2, ipady=2)
+        
+        entry1 = Entry(self,width=40,name="txtUsuario")
+        entry1.grid(row = 1 ,column = 0,padx=2, pady=2, ipadx=2, ipady=2)
+     
+        button1 = Button(self, text = "Enviar",command=self.editar_eliminarAdm)
+        button1.grid(row = 2, column = 0,sticky="w", pady=2,ipadx=3, ipady=3)
+
+        button2 = Button(self, text = "Cancelar",command = self.destroy)
+        button2.grid(row = 2, column = 0,sticky="e", pady=2,ipadx=3, ipady=3)
+        
+        datosUsuario = consultar_usuario(self.id_usuario) 
+        for i in datosUsuario:         
+            entry1.insert(0, i[1])
+            entry1.config(state="readonly")
+    
+    def editar_eliminarAdm(self):
+        try:
+            txtUsuario = self.nametowidget("txtUsuario")
+            usuario = txtUsuario.get()            
+
+            if usuario != "":                
+                datosPass = consultar_usuario(self.id_usuario)
+                id = datosPass[0][0]
+                if eliminarUsuario(id):
+                    tkMsgBox.showwarning(self.master.title(), "Se produjo un error al intentar registrarse")
+                else:
+                    tkMsgBox.showinfo(self.master.title(), "Usuario Eliminado(BAJA LOGICA)!")
                     self.destroy()
             else:
                 tkMsgBox.showwarning(self.master.title(), "Existen campos sin completar")

@@ -1,7 +1,7 @@
 from tkinter import *
 import tkinter.ttk as ttk
 from gui.crudSalas import *
-from app import ver_descuentos,consultar_descuentos,modificar_descuentos
+from app import ver_descuentos,consultar_descuentos,modificar_descuentos,consultar_diadescuentos
 
 class WinDescuentos(Toplevel):
     def __init__(self, master=None):
@@ -68,9 +68,11 @@ class WinEditarDescuento(tk.Toplevel):
         self.config(padx=10,pady=10)
         #self.geometry("220x300")
         datosDescuentos = consultar_descuentos(self.id_descuento)
+        datosDia = consultar_diadescuentos(self.id_descuento)
         for i in datosDescuentos:
-            textlabel1=f"{i[1]}"
-
+            textlabel1=f"{i[0]}"
+        for i in datosDia:
+            textlabel2=f"{i[0]}"
         #Cuerpo de la ventana
 
         label1 = Label(self, text = "Dia : ")
@@ -78,7 +80,8 @@ class WinEditarDescuento(tk.Toplevel):
 
         entry0 = Entry(self,width=40)
         entry0.grid(row = 0 ,column = 1,sticky="ew",padx=2, pady=2, ipadx=2, ipady=2)
-        entry0.insert(0,textlabel1)
+
+        entry0.insert(0, textlabel2)
         entry0.config(state="readonly")
         
         label2 = Label(self, text = "Descuento : ")
@@ -86,6 +89,8 @@ class WinEditarDescuento(tk.Toplevel):
 
         entry1 = Entry(self,width=40,name="txtDescuento")
         entry1.grid(row = 1 ,column = 1,padx=2, pady=2, ipadx=2, ipady=2)
+
+        entry1.insert(0,textlabel1)
 
         button1 = Button(self, text = "Aceptar",command=self.modificar_descuentos)
         button1.grid(row = 2, column = 1,sticky="w", pady=2,ipadx=3, ipady=3)
@@ -102,7 +107,7 @@ class WinEditarDescuento(tk.Toplevel):
 
             if descuento != "":
                 if modificar_descuentos(id_Descuento,descuento):
-                    tkMsgBox.showwarning(self.master.title(), "Se produjo un error al modificar la sala")
+                    tkMsgBox.showwarning(self.master.title(), "Se produjo un error al modificar el descuento")
                 else:
                     tkMsgBox.showinfo(self.master.title(), "Descuento Modificado Exitosamente!!!!!!")
                     self.destroy()

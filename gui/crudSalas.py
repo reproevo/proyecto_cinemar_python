@@ -198,8 +198,8 @@ class WinEliminarSalas(tk.Toplevel):
         #self.geometry("220x300")
 
         datosSala = consultar_sala(self.id_sala)
-        print(self.id_sala)
-        print(datosSala)
+        # print(self.id_sala)
+        # print(datosSala)
         for i in datosSala:
             textlabel0=f"N° de ID : {i[0]}"            
             textlabel1=f"N° de Sala : {i[1]}"
